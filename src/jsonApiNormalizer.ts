@@ -1,11 +1,5 @@
-type Error = { response: { data: { errors: { detail: string }[] } } }
-type JSONDATA = {
-  id: string | number,
-  type: string,
-  attributes?: object,
-  relationships?: any,
-}
-type JSONAPIDoc = { data: JSONDATA | JSONDATA[], included?: JSONDATA[] }
+import * as JSONAPI from 'jsonapi-typescript';
+type Error = { response: { data: JSONAPI.DocWithErrors } }
 
 export default class Normalizer {
   cache: any;
@@ -13,31 +7,42 @@ export default class Normalizer {
     this.cache = cache;
   }
 
-  idToRecordKey(id: string | number, type: string): string {
+  idToRecordKey(id: string | number | undefined, type: string): string {
     return `${type.toLowerCase()}_${id}`;
   }
 
-  recordKeyToData(key: string): JSONDATA {
+  recordKeyToData(key: string): JSONAPI.ResourceObject {
     const [type, id] = key.split('_')
     return { id, type }
   }
 
-  parseDataObject(data: JSONDATA): any {
-    let resource: any = {};
-    resource.id = data.id;
-    resource.type = data.type;
-    data && Object.assign(resource, data.attributes);
-    if (data && data.relationships) {
-      Object.keys(data.relationships).forEach(name => {
-        let rec = data.relationships[name].data
-        resource[name + 'Key'] = this.idToRecordKey(rec.id, rec.type)
+  parseDataObject({
+    id, type, attributes, relationships,
+  }: JSONAPI.ResourceObject): any {
+    let resource: any = {id, type};
+    attributes && Object.assign(resource, attributes);
+    if (relationships) {
+      Object.keys(relationships).forEach(name => {
+        const rel = relationships[name]
+        let rec = (rel as JSONAPI.RelationshipsWithData).data;
+        if (rec) {
+          if (Array.isArray(rec)) {
+            const keys = (rec as JSONAPI.ResourceIdentifierObject[]).map(
+              ({id, type}) => this.idToRecordKey(id, type)
+            );
+            resource[name + 'Key'] = keys;
+          } else {
+            const { id, type } = (rec as JSONAPI.ResourceIdentifierObject);
+            resource[name + 'Key'] = this.idToRecordKey(id, type);
+          }
+        }
       });
     }
 
     return resource;
   }
 
-  parse({ data: { included, data } }: { data: JSONAPIDoc }): any {
+  parse({ data: { included, data } }: { data: JSONAPI.DocWithData }): any {
     if (included) {
       this.parse({ data: { data: included } });
     }
