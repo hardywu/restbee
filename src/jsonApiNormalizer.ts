@@ -5,7 +5,7 @@ type JSONDATA = {
   attributes?: object,
   relationships?: any,
 }
-type JSONAPI = { data: JSONDATA | JSONDATA[], included?: JSONDATA[] }
+type JSONAPIDoc = { data: JSONDATA | JSONDATA[], included?: JSONDATA[] }
 
 export default class Normalizer {
   cache: any;
@@ -15,6 +15,11 @@ export default class Normalizer {
 
   idToRecordKey(id: string | number, type: string): string {
     return `${type.toLowerCase()}_${id}`;
+  }
+
+  recordKeyToData(key: string): JSONDATA {
+    const [type, id] = key.split('_')
+    return { id, type }
   }
 
   parseDataObject(data: JSONDATA): any {
@@ -32,7 +37,7 @@ export default class Normalizer {
     return resource;
   }
 
-  parse({ data: { included, data } }: { data: JSONAPI }): any {
+  parse({ data: { included, data } }: { data: JSONAPIDoc }): any {
     if (included) {
       this.parse({ data: { data: included } });
     }
@@ -54,8 +59,14 @@ export default class Normalizer {
       attributes: {}, relationships: {}
     };
     Object.keys(record).forEach(key => {
-      if (key.slice(-2) === 'Id') {
-        obj.relationships[key.slice(0, -2)] = { data: { id: record[key] } };
+      if (key.slice(-3) === 'Key') {
+        let rel
+        if (Array.isArray(record[key])) {
+          rel = { data: record[key].map(this.recordKeyToData) };
+        } else {
+          rel = { data: this.recordKeyToData(record[key]) };
+        }
+        obj.relationships[key.slice(0, -3)] = rel;
       } else if (!(['id', 'type'].includes(key) )) {
         obj.attributes[key] = record[key]
       }
