@@ -1,5 +1,5 @@
 import * as JSONAPI from 'jsonapi-typescript'
-import { JSONAPINormalizer, cachedRecords } from '../src/restbee'
+import { JSONAPINormalizer } from '../src/restbee'
 
 const data: JSONAPI.DocWithData = {
   data: {
@@ -33,6 +33,7 @@ const errors: JSONAPI.DocWithErrors = {
 
 const errMsgs: string[] = ['title already exists', 'content cannot be empty']
 
+let cachedRecords: any = {}
 const normalizer = new JSONAPINormalizer(cachedRecords)
 
 describe('restbee test', () => {

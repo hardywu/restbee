@@ -10,10 +10,11 @@
     "dist"
   ],
   "author": "hardywu <hardy0wu@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hardywu/restbee"
+  "repository": "github:hardywu/restbee",
+  "bugs": {
+    "url": "https://github.com/hardywu/restbee/issues"
   },
+  "homepage": "https://hardywu.github.io/restbee",
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0"
@@ -118,8 +119,5 @@
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.12.0",
     "typescript": "^3.0.3"
-  },
-  "dependencies": {
-    "axios": "^0.19.0"
   }
 }

@@ -7,8 +7,8 @@ export default class Normalizer {
     this.cache = cache
   }
 
-  idToRecordKey(id: string | number | undefined, type: string): string {
-    return `${type.toLowerCase()}_${id}`
+  idToRecordKey(id: string | number | undefined, type: string | undefined): string {
+    return `${type}_${id}`.toLowerCase()
   }
 
   recordKeyToData(key: string): JSONAPI.ResourceObject {
