@@ -24,7 +24,7 @@ export default class Normalizer {
         this.idToRecordKey(id, type)
       )
     } else {
-      const { id, type } = rec as JSONAPI.ResourceIdentifierObject
+      const { id, type } = rec
       return this.idToRecordKey(id, type)
     }
   }
