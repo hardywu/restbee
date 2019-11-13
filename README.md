@@ -1,10 +1,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/restbee.svg)](https://www.npmjs.com/package/restbee)
 [![Codecov](https://img.shields.io/codecov/c/github/hardywu/restbee.svg)](https://codecov.io/gh/hardywu/restbee)
-[![CircleCI](https://img.shields.io/circleci/project/github/hardywu/restbee.svg)](https://circleci.com/gh/hardywu/restbee)
 [![Travis](https://img.shields.io/travis/hardywu/restbee.svg)](https://travis-ci.org/hardywu/restbee)
-[![AppVeyor](https://img.shields.io/appveyor/ci/hardywu/restbee.svg)](https://ci.appveyor.com/project/hardywu/restbee)
-[![GitHub stars](https://img.shields.io/github/stars/hardywu/restbee.svg?style=social&logo=github&label=Stars)](https://github.com/hardywu/restbee)
 
 # Restbee
 
