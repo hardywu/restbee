@@ -1,14 +1,10 @@
-import DummyClass from "../src/restbee"
+import { JSONAPINormalizer, cachedRecords } from '../src/restbee'
 
 /**
  * Dummy test
  */
-describe("Dummy test", () => {
-  it("works if true is truthy", () => {
-    expect(true).toBeTruthy()
-  })
-
-  it("DummyClass is instantiable", () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
+describe('JSONAPI Normalizer test', () => {
+  it('JSONAPINormalizer is instantiable', () => {
+    expect(new JSONAPINormalizer(cachedRecords)).toBeInstanceOf(JSONAPINormalizer)
   })
 })
