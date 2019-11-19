@@ -60,7 +60,7 @@ Content-Type: application/vnd.api+json
   }
 }
 ```
-the result `const flattened = parseResObject(data)`
+the result `const flattened = normalizer.parseResObject(data)`
 
 ```
 # flattened
@@ -72,6 +72,6 @@ the result `const flattened = parseResObject(data)`
 }
 ```
 
-use `toJsonApi(flattened)` to serialize the flattened json back to JSONAPI data
+use `normalizer.toJsonApi(flattened)` to serialize the flattened json back to JSONAPI data
 
 
