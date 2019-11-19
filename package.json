@@ -1,6 +1,6 @@
 {
   "name": "restbee",
-  "version": "0.0.0-development",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/restbee.umd.js",
@@ -14,6 +14,7 @@
   "bugs": {
     "url": "https://github.com/hardywu/restbee/issues"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/@hardywu" },
   "homepage": "https://hardywu.github.io/restbee",
   "license": "MIT",
   "engines": {
